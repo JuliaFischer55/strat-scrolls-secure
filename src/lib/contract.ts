@@ -1,4 +1,4 @@
-import { useContract, useContractWrite, useContractRead } from 'wagmi';
+import { useWriteContract, useReadContract } from 'wagmi';
 import { StratScrollsSecureABI } from './abi';
 
 // Contract address (will be set after deployment)
@@ -20,31 +20,25 @@ export const encryptPrivateData = async (data: {
 };
 
 /**
- * Hook for interacting with StratScrollsSecure contract
- */
-export function useStratScrollsSecure() {
-  const contract = useContract({
-    address: CONTRACT_ADDRESS,
-    abi: StratScrollsSecureABI,
-  });
-
-  return contract;
-}
-
-/**
  * Hook for creating a new strategy
  */
 export function useCreateStrategy() {
-  const { write, isLoading, error } = useContractWrite({
-    address: CONTRACT_ADDRESS,
-    abi: StratScrollsSecureABI,
-    functionName: 'createStrategy',
-  });
+  const { writeContract, isPending } = useWriteContract();
+
+  const createStrategy = async (args: {
+    args: [string, string, string, string, string];
+  }) => {
+    return writeContract({
+      address: CONTRACT_ADDRESS,
+      abi: StratScrollsSecureABI,
+      functionName: 'createStrategy',
+      args: args.args,
+    });
+  };
 
   return {
-    createStrategy: write,
-    isLoading,
-    error,
+    createStrategy,
+    isLoading: isPending,
   };
 }
 
@@ -52,16 +46,20 @@ export function useCreateStrategy() {
  * Hook for purchasing a strategy
  */
 export function usePurchaseStrategy() {
-  const { write, isLoading, error } = useContractWrite({
-    address: CONTRACT_ADDRESS,
-    abi: StratScrollsSecureABI,
-    functionName: 'purchaseStrategy',
-  });
+  const { writeContract, isPending } = useWriteContract();
+
+  const purchaseStrategy = async (strategyId: bigint, encryptedPayment: string) => {
+    return writeContract({
+      address: CONTRACT_ADDRESS,
+      abi: StratScrollsSecureABI,
+      functionName: 'purchaseStrategy',
+      args: [strategyId, encryptedPayment],
+    });
+  };
 
   return {
-    purchaseStrategy: write,
-    isLoading,
-    error,
+    purchaseStrategy,
+    isLoading: isPending,
   };
 }
 
@@ -69,16 +67,20 @@ export function usePurchaseStrategy() {
  * Hook for updating a strategy
  */
 export function useUpdateStrategy() {
-  const { write, isLoading, error } = useContractWrite({
-    address: CONTRACT_ADDRESS,
-    abi: StratScrollsSecureABI,
-    functionName: 'updateStrategy',
-  });
+  const { writeContract, isPending } = useWriteContract();
+
+  const updateStrategy = async (strategyId: bigint, args: [string, string, string, string, string]) => {
+    return writeContract({
+      address: CONTRACT_ADDRESS,
+      abi: StratScrollsSecureABI,
+      functionName: 'updateStrategy',
+      args: [strategyId, ...args],
+    });
+  };
 
   return {
-    updateStrategy: write,
-    isLoading,
-    error,
+    updateStrategy,
+    isLoading: isPending,
   };
 }
 
@@ -86,16 +88,20 @@ export function useUpdateStrategy() {
  * Hook for deactivating a strategy
  */
 export function useDeactivateStrategy() {
-  const { write, isLoading, error } = useContractWrite({
-    address: CONTRACT_ADDRESS,
-    abi: StratScrollsSecureABI,
-    functionName: 'deactivateStrategy',
-  });
+  const { writeContract, isPending } = useWriteContract();
+
+  const deactivateStrategy = async (strategyId: bigint) => {
+    return writeContract({
+      address: CONTRACT_ADDRESS,
+      abi: StratScrollsSecureABI,
+      functionName: 'deactivateStrategy',
+      args: [strategyId],
+    });
+  };
 
   return {
-    deactivateStrategy: write,
-    isLoading,
-    error,
+    deactivateStrategy,
+    isLoading: isPending,
   };
 }
 
@@ -103,16 +109,19 @@ export function useDeactivateStrategy() {
  * Hook for withdrawing earnings
  */
 export function useWithdrawEarnings() {
-  const { write, isLoading, error } = useContractWrite({
-    address: CONTRACT_ADDRESS,
-    abi: StratScrollsSecureABI,
-    functionName: 'withdrawEarnings',
-  });
+  const { writeContract, isPending } = useWriteContract();
+
+  const withdrawEarnings = async () => {
+    return writeContract({
+      address: CONTRACT_ADDRESS,
+      abi: StratScrollsSecureABI,
+      functionName: 'withdrawEarnings',
+    });
+  };
 
   return {
-    withdrawEarnings: write,
-    isLoading,
-    error,
+    withdrawEarnings,
+    isLoading: isPending,
   };
 }
 
@@ -120,7 +129,7 @@ export function useWithdrawEarnings() {
  * Hook for reading strategy information
  */
 export function useStrategyInfo(strategyId: number) {
-  const { data, isLoading, error } = useContractRead({
+  const { data, isLoading, error } = useReadContract({
     address: CONTRACT_ADDRESS,
     abi: StratScrollsSecureABI,
     functionName: 'getStrategyInfo',
@@ -138,7 +147,7 @@ export function useStrategyInfo(strategyId: number) {
  * Hook for reading user strategies
  */
 export function useUserStrategies(userAddress: string) {
-  const { data, isLoading, error } = useContractRead({
+  const { data, isLoading, error } = useReadContract({
     address: CONTRACT_ADDRESS,
     abi: StratScrollsSecureABI,
     functionName: 'getUserStrategies',
@@ -156,7 +165,7 @@ export function useUserStrategies(userAddress: string) {
  * Hook for reading user purchases
  */
 export function useUserPurchases(userAddress: string) {
-  const { data, isLoading, error } = useContractRead({
+  const { data, isLoading, error } = useReadContract({
     address: CONTRACT_ADDRESS,
     abi: StratScrollsSecureABI,
     functionName: 'getUserPurchases',
@@ -174,7 +183,7 @@ export function useUserPurchases(userAddress: string) {
  * Hook for reading user earnings
  */
 export function useUserEarnings(userAddress: string) {
-  const { data, isLoading, error } = useContractRead({
+  const { data, isLoading, error } = useReadContract({
     address: CONTRACT_ADDRESS,
     abi: StratScrollsSecureABI,
     functionName: 'getUserEarnings',
@@ -192,7 +201,7 @@ export function useUserEarnings(userAddress: string) {
  * Hook for checking if user has purchased a strategy
  */
 export function useHasUserPurchased(strategyId: number, userAddress: string) {
-  const { data, isLoading, error } = useContractRead({
+  const { data, isLoading, error } = useReadContract({
     address: CONTRACT_ADDRESS,
     abi: StratScrollsSecureABI,
     functionName: 'hasUserPurchased',
@@ -210,7 +219,7 @@ export function useHasUserPurchased(strategyId: number, userAddress: string) {
  * Hook for reading contract statistics
  */
 export function useContractStats() {
-  const { data, isLoading, error } = useContractRead({
+  const { data, isLoading, error } = useReadContract({
     address: CONTRACT_ADDRESS,
     abi: StratScrollsSecureABI,
     functionName: 'getContractStats',
