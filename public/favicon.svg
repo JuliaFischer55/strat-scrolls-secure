@@ -1,0 +1,16 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="6" fill="url(#gradient)"/>
+  <!-- Scroll icon representing strategy scrolls -->
+  <path d="M8 6h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H8c-1.1 0-2-.9-2-2V8c0-1.1.9-2 2-2z" fill="white" opacity="0.9"/>
+  <path d="M10 10h12v1H10v-1zm0 2h12v1H10v-1zm0 2h8v1H10v-1z" fill="url(#gradient)" opacity="0.8"/>
+  <!-- Lock icon for security -->
+  <circle cx="22" cy="10" r="2" fill="white" opacity="0.9"/>
+  <path d="M21 9h2v2h-2v-2z" fill="url(#gradient)"/>
+</svg>

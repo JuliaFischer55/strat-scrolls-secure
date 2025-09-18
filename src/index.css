@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 160 78% 85%;
+
+    --card: 240 8% 8%;
+    --card-foreground: 160 78% 85%;
+
+    --popover: 240 8% 8%;
+    --popover-foreground: 160 78% 85%;
+
+    --primary: 159 98% 50%;
+    --primary-foreground: 240 10% 3.9%;
+
+    --secondary: 240 5% 15%;
+    --secondary-foreground: 160 78% 85%;
+
+    --muted: 240 5% 15%;
+    --muted-foreground: 160 30% 60%;
+
+    --accent: 195 100% 50%;
+    --accent-foreground: 240 10% 3.9%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 160 78% 85%;
+
+    --border: 240 5% 20%;
+    --input: 240 5% 15%;
+    --ring: 159 98% 50%;
+
+    /* Custom game theme colors */
+    --cyber-green: 159 98% 50%;
+    --cyber-blue: 195 100% 50%;
+    --scroll-brown: 30 40% 25%;
+    --parchment: 45 50% 85%;
+    --mystery-purple: 270 80% 60%;
+    --gold: 45 100% 60%;
+
+    /* Gradients */
+    --gradient-cyber: linear-gradient(135deg, hsl(159 98% 50%), hsl(195 100% 50%));
+    --gradient-mystery: linear-gradient(135deg, hsl(270 80% 60%), hsl(240 10% 3.9%));
+    --gradient-scroll: linear-gradient(145deg, hsl(30 40% 25%), hsl(45 50% 35%));
+    --gradient-glow: radial-gradient(circle at center, hsl(159 98% 50% / 0.3), transparent);
+
+    /* Shadows */
+    --shadow-glow: 0 0 30px hsl(159 98% 50% / 0.4);
+    --shadow-cyber: 0 10px 30px hsl(159 98% 50% / 0.2);
+    --shadow-scroll: 0 8px 25px hsl(30 40% 25% / 0.6);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-mono;
+  }
+}
+
+@layer components {
+  .scroll-card {
+    @apply bg-gradient-to-br from-[hsl(var(--scroll-brown))] to-[hsl(var(--scroll-brown)/0.8)] 
+           border border-[hsl(var(--gold)/0.3)] rounded-lg p-6 
+           shadow-[var(--shadow-scroll)] hover:shadow-[var(--shadow-glow)] 
+           transition-all duration-300 hover:scale-105;
+  }
+
+  .cyber-glow {
+    box-shadow: var(--shadow-glow);
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+
+  .mystery-scroll {
+    background: var(--gradient-scroll);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mystery-scroll::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, hsl(159 98% 50% / 0.2), transparent);
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  .code-rain {
+    font-family: 'Courier New', monospace;
+    color: hsl(159 98% 50%);
+    text-shadow: 0 0 5px hsl(159 98% 50% / 0.5);
+    animation: matrix-fall 10s linear infinite;
+  }
+
+  .pixelated-border {
+    border-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='pixel' width='10' height='10' patternUnits='userSpaceOnUse'%3E%3Crect width='5' height='5' fill='%2300ff88'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23pixel)'/%3E%3C/svg%3E") 10;
+  }
+
+  @keyframes pulse-glow {
+    0% { box-shadow: 0 0 20px hsl(159 98% 50% / 0.3); }
+    100% { box-shadow: 0 0 40px hsl(159 98% 50% / 0.6); }
+  }
+
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  @keyframes matrix-fall {
+    0% { transform: translateY(-100vh); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
+  }
+}
